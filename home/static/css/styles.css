@@ -1,0 +1,27 @@
+.custom-upload-button {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: black;
+  color: green;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+body {
+  background-color: green;
+}
+
+
+.custom-upload-button:hover {
+  background-color: #ffffff;
+}
+
+.custom-upload-button:active {
+  background-color: #ffffff;
+}
+
+#upload-btn {
+  display: none;
+}

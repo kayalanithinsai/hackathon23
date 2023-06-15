@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Solutions Page</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+    .navbar {
+      background-color: #007bff;
+    }
+    .navbar-brand {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand" href="/">Solutions Analysis</a>
+</nav>
+
+<!--Show Exceptions as text area-->
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="text-center">Exception</h4>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <textarea class="form-control" rows="5" readonly>{{ exception }}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br/>
+<br/>
+<!--Sollutions Tab-->
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+<form action="/" method="post">
+  {% csrf_token %}
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Solutions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <input type="hidden" name="exception" value="{{ exception }}">
+        {% for item in data %}
+          <tr>
+            <td>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="selected_items" value="{{ item }}">
+              </div>
+            </td>
+            <td>{{ item }}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="selected_items" value="others" id="otherCheckbox">
+            </div>
+          </td>
+          <td>
+            <input type="text" class="form-control" name="otherInput" id="otherInput" placeholder="Solution Not Listed">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+  </div>
+</form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $("#otherInput").prop("disabled", true);
+
+    $("#otherCheckbox").change(function() {
+      $("#otherInput").prop("disabled", !$(this).is(":checked"));
+    });
+  });
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+</body>
+</html>

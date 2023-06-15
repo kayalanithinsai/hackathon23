@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Page</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+    .toast-success {
+      background-color: #28a745; /* Set the background color to the specified hex color */
+      color: #fff; /* Set the text color to white or any contrasting color */
+    }
+    .toast {
+      padding: 16px; /* Adjust the padding value as needed */
+    }
+    .navbar {
+      background-color: #007bff; /* Set the background color to match the blue submit button */
+    }
+    .navbar-brand {
+      color: #fff;
+    }
+  </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand" href="/">Solutions Analysis</a>
+</nav>
+
+{% if hide_upload %}
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="text-center">Upload Logger File</h4>
+        </div>
+        <div class="card-body">
+          <form action="/solutions/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" name="clusterType" class="form-control" placeholder="Cluster Type">
+            </div>
+            <div class="form-group">
+              <input type="text" name="stepType" class="form-control" placeholder="Step Type">
+            </div>
+
+            <div class="form-group">
+              <input type="file" name="file" class="form-control-file">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block">Upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% if show_notification %}
+<div class="toast toast-success" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true" data-delay="5000" style="position: fixed; top: 0; right: 0; margin: 20px;">
+  <div class="toast-header bg-success text-white">
+    <button type="button" class="ml-2 mb-1 close toast_button" data-dismiss="toast" aria-label="Close">
+      <span aria-hidden="false">&times;</span>
+    </button>
+  </div>
+  <div class="toast-body">
+    Thank you for the contribution.
+  </div>
+</div>
+{% endif %}
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script>
+$('.toast_button').on('click', function() {
+  $('.toast').hide(); // Hide the toast when close button is clicked
+});
+
+  $(document).ready(function() {
+    $("#selectItems").change(function() {
+      var selectedOption = $(this).val();
+      if (selectedOption === "other") {
+        $("#otherInput").show();
+      } else {
+        $("#otherInput").hide();
+      }
+      checkFormValidity();
+    });
+
+    $("#otherText").on("input", function() {
+      checkFormValidity();
+    });
+
+    function checkFormValidity() {
+      var selectedOption = $("#selectItems").val();
+      var otherTextValue = $("#otherText").val();
+      if (selectedOption !== "" || otherTextValue !== "") {
+        $("#submitButton").prop("disabled", false);
+      } else {
+        $("#submitButton").prop("disabled", true);
+      }
+    }
+  });
+</script>
+
+
+
+</body>
+</html>
